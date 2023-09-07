@@ -1,28 +1,14 @@
 #!/usr/bin/python3
 if __name__ == "__main__":
+    from sys import argv
     from calculator_1 import add, sub, mul, div
-    from sys import argv, exit
-
-    arguments = argv[:]
-
-    # Check if the number of arguments is not 4
-    if len(arguments) != 4:
-        print("Usage: {} <a> <operator> <b>".format(arguments[0]))
+    if len(argv) != 4:
+        print("Usage:", argv[0], "<a> <operator> <b>")
         exit(1)
 
-    operator = argv[2]
-    a = int(argv[1])
-    b = int(argv[3])
-
-    # Check if the operator is valid and perform the operation
-    if operator == '+':
-        print("{} + {} = {}".format(a, b, add(a, b)))
-    elif operator == '-':
-        print("{} - {} = {}".format(a, b, sub(a, b)))
-    elif operator == '*':
-        print("{} * {} = {}".format(a, b, mul(a, b)))
-    elif operator == '/':
-        print("{} / {} = {}".format(a, b, div(a, b)))
-    else:
-        print("Unknown operator. Available operators: +, -, *, and /")
+    a, operand, b = int(argv[1]), argv[2], int(argv[3])
+    arith = {'+': add, '-': sub, '*': mul, '/': div}
+    if operand not in arith:
+        print("Unknown operator. Only: +, -, * and / available")
         exit(1)
+    print('{:d} {} {:d} = {:d}'.format(a, operand, b, arith[operand](a, b)))
