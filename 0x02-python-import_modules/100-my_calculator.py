@@ -9,7 +9,7 @@ if __name__ == "__main__":
         exit(1)
 
     operators = {'+': add, '-': sub, '*': mul, '/': div}
-    a, operand, b = int(argv[1]), argv[2], int(argv[3])
+    a, operator, b = int(argv[1]), argv[2], int(argv[3])
 
     # Check if the operator is valid and perform the operation
     if operator in operators:
