@@ -15,4 +15,5 @@ if __name__ == "__main__":
     if operator not in operators:
         print("Unknown operator. Only: +, -, * and / available")
         exit(1)
-    print('{:d} {} {:d} = {:d}'.format(a, operator, b, operators[operator](a, b)))
+    result = operators[operator](a, b)
+    print('{:d} {} {:d} = {:d}'.format(a, operator, b, result))
