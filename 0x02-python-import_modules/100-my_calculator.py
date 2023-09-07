@@ -12,7 +12,7 @@ if __name__ == "__main__":
     a = int(argv[1])
     b = int(argv[3])
 
-    if operand not in arith:
+    if operator not in operators:
         print("Unknown operator. Only: +, -, * and / available")
         exit(1)
-    print('{:d} {} {:d} = {:d}'.format(a, operand, b, arith[operand](a, b)))
+    print('{:d} {} {:d} = {:d}'.format(a, operator, b, operators[operator](a, b)))
