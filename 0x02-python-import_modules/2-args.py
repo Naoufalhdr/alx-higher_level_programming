@@ -2,11 +2,8 @@
 if __name__ == "__main__":
     from sys import argv
     arguments = argv[1:]
-    if arguments:
-        print("{} arguments:".format(len(arguments)))
-    else:
-        print("{} arguments.".format(len(arguments)))
-    i = 1
-    for arg in arguments:
+    argc = len(arguments)
+    delim = 's:' if argc > 1 else 's.' if argc == 0 else ':'
+    print("{} argument{}".format(argc, delim))
+    for i, arg in enumerate(arguments, 1):
         print("{:d}: {}".format(i, arg))
-        i += 1
