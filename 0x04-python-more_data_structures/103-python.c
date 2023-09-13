@@ -1,63 +1,58 @@
-#include "Python.h"
+#include <Python.h>
+
+void print_python_list(PyObject *p);
+void print_python_bytes(PyObject *p);
 
 /**
-  * print_python_list - Prints information about python lists objects
-  * @p: PyObject pointer to print info about
-  */
+ * print_python_list - Prints basic info about Python lists.
+ * @p: A PyObject list object.
+ */
 void print_python_list(PyObject *p)
 {
-	Py_ssize_t i, py_list_size;
-	PyObject *item;
-	PyTypeObject *type;
+	int size, alloc, i;
+	const char *type;
+	PyListObject *list = (PyListObject *)p;
+	PyVarObject *var = (PyVarObject *)p;
 
-	/* Check if the input is a valid list object */
-	if (!PyList_Check(p))
+	size = var->ob_size;
+	alloc = list->allocated;
+
+	printf("[*] Python list info\n");
+	printf("[*] Size of the Python List = %d\n", size);
+	printf("[*] Allocated = %d\n", alloc);
+
+	for (i = 0; i < size; i++)
 	{
-		printf("[*] Size of the Python List = 0\n");
-		printf("[*] Allocated = 0\n");
-		return;
-	}
-
-	py_list_size = ((PyVarObject *)p)->ob_size;
-
-	printf("[*] Size of the Python List = %ld\n", py_list_size);
-	printf("[*] Allocated = %ld\n", ((PyListObject *)p)->allocated);
-
-	for (i = 0; i < py_list_size; i++)
-	{
-		item = ((PyListObject *)p)->ob_item[i];
-		type = PyObject_Type(item);
-		printf("Element %ld: %s\n", i, type->tp_name);
-		Py_DECREF(type);
+		type = list->ob_item[i]->ob_type->tp_name;
+		printf("Element %d: %s\n", i, type);
+		if (strcmp(type, "bytes") == 0)
+			print_python_bytes(list->ob_item[i]);
 	}
 }
 
 /**
-  * print_python_bytes - Prints information about python bytes objects
-  * @p: PyObject pointer to print info about
-  */
+ * print_python_bytes - Prints basic info about Python byte objects.
+ * @p: A PyObject byte object.
+ */
 void print_python_bytes(PyObject *p)
 {
-	PyBytesObject *bytes;
 	unsigned char i, size;
+	PyBytesObject *bytes = (PyBytesObject *)p;
 
-	/* Check if the input is a valid bytes object */
-	if (!PyBytes_Check(p))
+	printf("[.] bytes object info\n");
+	if (strcmp(p->ob_type->tp_name, "bytes") != 0)
 	{
-		printf("[.] bytes object info\n");
 		printf("  [ERROR] Invalid Bytes Object\n");
 		return;
 	}
 
-	bytes = (PyBytesObject *)p;
+	printf("  size: %ld\n", ((PyVarObject *)p)->ob_size);
+	printf("  trying string: %s\n", bytes->ob_sval);
 
-	printf("[.] bytes object info\n");
-	printf("  size: %ld\n", PyBytes_Size(p));
-	printf("  trying string: %s\n", PyBytes_AsString(p));
-
-	size = (unsigned char)PyBytes_Size(p);
-	if (size > 10)
+	if (((PyVarObject *)p)->ob_size > 10)
 		size = 10;
+	else
+		size = ((PyVarObject *)p)->ob_size + 1;
 
 	printf("  first %d bytes: ", size);
 	for (i = 0; i < size; i++)
@@ -69,4 +64,3 @@ void print_python_bytes(PyObject *p)
 			printf(" ");
 	}
 }
-
