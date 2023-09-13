@@ -15,10 +15,15 @@ def roman_to_int(roman_string):
             'M': 1000
             }
     result = 0
+    prev_value = 0
 
-    for roman_char in roman_string:
+    for roman_char in roman_string[::-1]:
         if roman_dict.get(roman_char) is None:
             return 0
-        if roman_char in roman_dict.keys():
-            result += roman_dict[roman_char]
+        current_value = roman_dict[roman_char]
+        if current_value >= prev_value:
+            result += current_value
+        else:
+            result -= current_value
+        prev_value = current_value
     return result
