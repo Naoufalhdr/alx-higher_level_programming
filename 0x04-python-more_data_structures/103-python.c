@@ -26,7 +26,7 @@ void print_python_list(PyObject *p)
 	for (i = 0; i < py_list_size; i++)
 	{
 		item = ((PyListObject *)p)->ob_item[i];
-	        type = PyObject_Type(item);
+		type = PyObject_Type(item);
 		printf("Element %ld: %s\n", i, type->tp_name);
 		Py_DECREF(type);
 	}
