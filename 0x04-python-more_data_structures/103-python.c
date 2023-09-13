@@ -7,8 +7,8 @@
 void print_python_list(PyObject *p)
 {
 	Py_ssize_t i, py_list_size;
-	const char *item_type;
 	PyObject *item;
+	PyTypeObject *type;
 
 	/* Check if the input is a valid list object */
 	if (!PyList_Check(p))
@@ -18,7 +18,7 @@ void print_python_list(PyObject *p)
 		return;
 	}
 
-	py_list_size = PyList_Size(p);
+	py_list_size = ((PyVarObject *)p)->ob_size;
 
 	printf("[*] Size of the Python List = %ld\n", py_list_size);
 	printf("[*] Allocated = %ld\n", ((PyListObject *)p)->allocated);
@@ -26,8 +26,9 @@ void print_python_list(PyObject *p)
 	for (i = 0; i < py_list_size; i++)
 	{
 		item = ((PyListObject *)p)->ob_item[i];
-		item_type = Py_TYPE(item)->tp_name;
-		printf("Element %ld: %s\n", i, item_type);
+	        type = PyObject_Type(item);
+		printf("Element %ld: %s\n", i, type->tp_name);
+		Py_DECREF(type);
 	}
 }
 
