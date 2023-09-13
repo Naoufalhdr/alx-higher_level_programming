@@ -5,9 +5,9 @@ def complex_delete(a_dictionary, value):
     del_keys = [k for k, v in a_dictionary.items() if v == value]
     """
     deleted_keys = []
-    for k, v in a_dictionary.items():
-        if v == value:
-            deleted_keys.append(k)
+    for key, key_value in a_dictionary.items():
+        if key_value is value:
+            deleted_keys.append(key)
     for key in deleted_keys:
         del a_dictionary[key]
     return a_dictionary
