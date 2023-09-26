@@ -10,4 +10,3 @@ def safe_function(fct, *args):
         print(f"Exception: {err}", file=sys.stderr)
         result = None
     return result
-
