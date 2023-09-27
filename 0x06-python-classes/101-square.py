@@ -55,4 +55,4 @@ class Square:
                 square += '\n'
             for _ in range(self.__size):
                 square += " " * self.__position[0] + "#" * self.__size + '\n'
-        return square_str[:-1]
+        return square[:-1]
