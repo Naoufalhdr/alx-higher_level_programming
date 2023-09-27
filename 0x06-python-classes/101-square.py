@@ -48,7 +48,7 @@ class Square:
 
     def __str__(self):
         if self.__size == 0:
-            print()
+            return ""
         else:
             square = ""
             for _ in range(self.__position[1]):
