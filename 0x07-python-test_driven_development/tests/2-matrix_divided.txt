@@ -52,6 +52,17 @@ consisting either of integer or floats
 If the input matrix is not a list of lists or contains non-integer or non-float elements, a TypeError is raised.
 If divided by 0, a ZeroDivisionError is raised.
 
+- Missing Argument Or Too Many Argument Error:
+
+    >>> matrix = [[1, 2, 3], [4, 5, 6]]
+    >>> print(matrix_divided(matrix))
+    Traceback (most recent call last):
+    TypeError: matrix_divided() missing 1 required positional argument: 'div'
+
+    >>> print(matrix_divided())
+    Traceback (most recent call last):
+    TypeError: matrix_divided() missing 2 required positional arguments: 'matrix' and 'div'
+
 - Attempt to divide by 0:
 
     >>> print(matrix_divided(matrix, 0))
