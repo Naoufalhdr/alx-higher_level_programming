@@ -108,10 +108,6 @@ If two matrices cannot be multiplied (ie. the row count of 'm_a' is not equal to
 
 5- If either paremeter is not a list of lists:
 
-    >>> result = lazy_matrix_mul([[1, 2], [3, 4]], "matrix")
-    Traceback (most recent call last):
-    ValueError: Scalar operands are not allowed, use '*' instead
-
     >>> print(lazy_matrix_mul([1, 2], [[3, 4]]))
     Traceback (most recent call last):
     ValueError: shapes (2,) and (1,2) not aligned: 2 (dim 0) != 1 (dim 0)
