@@ -6,15 +6,13 @@ class BaseGeometry:
     """A base class for geometry-related classes."""
 
     def area(self):
-        """
-        Raises an Exception indicating that the area() method is not
+        """Raises an Exception indicating that the area() method is not
         implemented.
         """
         raise Exception("area() is not implemented")
 
     def integer_validator(self, name, value):
-        """
-        Validates the input value
+        """Validates the input value
 
         Args:
             name (str): The name of the value being validated.
