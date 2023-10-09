@@ -4,6 +4,7 @@
 
 class BaseGeometry:
     """A base class for geometry-related classes."""
+
     def area(self):
         """
         Raises an Exception indicating that the area() method is not
@@ -16,7 +17,6 @@ class BaseGeometry:
         Validates the input value
 
         Args:
-            self: The instance of the BaseGeometry class.
             name (str): The name of the value being validated.
             value: The value to be validated.
 
