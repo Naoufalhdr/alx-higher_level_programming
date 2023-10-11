@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 import sys
+"""
+Reads lines from standard input, calculates file size and status code counts,
+and prints statistics every 10 lines."""
 
 
 def print_stats(size, status_codes):
