@@ -97,3 +97,23 @@ class Rectangle(Base):
                 f"{self.__x}/{self.__y} - "
                 f"{self.__width}/{self.__height}"
                 )
+
+    def update(self, *args):
+        """
+        Update the attributes of the Rectangle instance.
+
+        Args:
+            *args (int): Variable-length arguments in the order:
+                         id, width, height, x, y.
+        """
+        arg_count = len(args)
+        if arg_count > 0:
+            self.id = args[0]
+        if arg_count > 1:
+            self.width = args[1]
+        if arg_count > 2:
+            self.height = args[2]
+        if arg_count > 3:
+            self.x = args[3]
+        if arg_count > 4:
+            self.y = args[4]
