@@ -34,9 +34,6 @@ class Base:
 
         Args:
             json_string (str): A JSON string.
-
-        Returns:
-            list: A list of dictionaries.
         """
         if json_string is None or len(json_string) == 0:
             return []
@@ -45,6 +42,11 @@ class Base:
     @classmethod
     def save_to_file(cls, list_objs):
         """
+        Serialize a list of instances and save them as JSON data to a file.
+
+        Args:
+            cls: The class itself, used to determine the filename.
+            list_objs (list): A list of instances to be serialized and saved.
         """
         if list_objs is None:
             list_objs = []
@@ -54,3 +56,23 @@ class Base:
 
         with open(file_name, "w", encoding="utf-8") as file:
             file.write(Base.to_json_string(obj_dicts))
+
+    @classmethod
+    def create(cls, **dictionary):
+        """
+        Create a new instance of the class with attributes set from a
+        dictionary
+
+        Args:
+            cls: The class itself.
+            **dictionary: A dictionary containing attribute values for the new
+                          instance.
+
+        Returns:
+            A new instance of the class with attributes set according to the
+            dictionary.
+        """
+        if dictionary:
+            dummy = cls(1, 1) if cls.__name__ == "Rectangle" else cls(1)
+            dummy.update(**dictionary)
+            return dummy
