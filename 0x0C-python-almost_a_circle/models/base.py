@@ -27,6 +27,21 @@ class Base:
             return []
         return json.dumps(list_dictionaries)
 
+    @staticmethod
+    def from_json_string(json_string):
+        """
+        Deserialize a JSON string to a list of dictionaries.
+
+        Args:
+            json_string (str): A JSON string.
+
+        Returns:
+            list: A list of dictionaries.
+        """
+        if json_string is None or len(json_string) == 0:
+            return []
+        return json.loads(json_string)
+
     @classmethod
     def save_to_file(cls, list_objs):
         """
