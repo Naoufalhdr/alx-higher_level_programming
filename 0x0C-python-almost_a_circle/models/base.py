@@ -58,6 +58,27 @@ class Base:
             file.write(Base.to_json_string(obj_dicts))
 
     @classmethod
+    def load_from_file(cls):
+        """
+        Load a list of instances from a JSON file.
+
+        Args:
+            cls: The class itself.
+        """
+        file_name = f"{cls.__name__}.json"
+
+        try:
+            with open(file_name, "r", encoding="utf-8") as file:
+                json_string = file.read()
+                if json_string:
+                    dict_list = Base.from_json_string(json_string)
+                    instance_list = [cls.create(**item) for item in dict_list]
+        except FileNotFoundError:
+            return []
+
+        return instance_list
+
+    @classmethod
     def create(cls, **dictionary):
         """
         Create a new instance of the class with attributes set from a
