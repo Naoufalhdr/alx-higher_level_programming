@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module defines the Base class."""
 import json
+import csv
 
 
 class Base:
@@ -97,3 +98,50 @@ class Base:
             dummy = cls(1, 1) if cls.__name__ == "Rectangle" else cls(1)
             dummy.update(**dictionary)
             return dummy
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """
+        Serialize a list of objects and save them to a CSV file.
+
+        Args:
+            cls (type): The class type.
+            list_objs (list): List of objects to serialize.
+        """
+        file_name = f"{cls.__name__}.csv"
+
+        with open(file_name, 'w', newline='') as csv_file:
+            if list_objs is None:
+                csv_file.write("[]")
+            else:
+                if cls.__name__ == 'Rectangle':
+                    field_names = ['id', 'width', 'height', 'x', 'y']
+                else:
+                    field_names = ['id', 'size', 'x', 'y']
+                csv_writer = csv.DictWriter(csv_file, fieldnames=field_names)
+                for obj in list_objs:
+                    csv_writer.writerow(obj.to_dictionary())
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """
+        Deserialize objects from a CSV file and return a list of instances.
+
+        Returns:
+            list: List of instances deserialized from the CSV file.
+        """
+        file_name = f"{cls.__name__}.csv"
+
+        try:
+            with open(file_name, 'r', newline='') as csv_file:
+                if cls.__name__ == 'Rectangle':
+                    field_names = ['id', 'width', 'height', 'x', 'y']
+                else:
+                    field_names = ['id', 'size', 'x', 'y']
+                csv_reader = csv.DictReader(csv_file, fieldnames=field_names)
+                list_objs = [dict((k, int(v)) for k, v in d.items())
+                             for d in csv_reader]
+        except FileNotFoundError:
+            return []
+
+        return [cls.create(**d) for d in list_objs]
