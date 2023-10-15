@@ -24,7 +24,7 @@ class Base:
             list_dictionaries (list): A list of dictionaries.
         """
         if list_dictionaries is None or len(list_dictionaries) == 0:
-            return []
+            return "[]"
         return json.dumps(list_dictionaries)
 
     @staticmethod
@@ -36,7 +36,7 @@ class Base:
             json_string (str): A JSON string.
         """
         if json_string is None or len(json_string) == 0:
-            return []
+            return "[]"
         return json.loads(json_string)
 
     @classmethod
