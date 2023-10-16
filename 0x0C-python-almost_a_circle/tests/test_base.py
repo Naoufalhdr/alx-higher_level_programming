@@ -124,8 +124,8 @@ class TestBaseDeserialization(unittest.TestCase):
         self.assertIsInstance(list_output, list)
 
     def test_from_json_string_empty_list(self):
-        self.assertEqual(Base.from_json_string([]), "[]")
-        self.assertEqual(Base.from_json_string(None), "[]")
+        self.assertEqual(Base.from_json_string([]), [])
+        self.assertEqual(Base.from_json_string(None), [])
 
     def test_from_json_string_no_args(self):
         with self.assertRaises(TypeError):
