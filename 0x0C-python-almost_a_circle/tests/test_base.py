@@ -136,7 +136,7 @@ class TestBaseDeserialization(unittest.TestCase):
             Base.from_json_string([], 1)
 
 
-class TestBaseFileOutput(unittest.TestCase):
+class TestJsonBaseFileOutput(unittest.TestCase):
     """Test the save_to_file method for writing instances to files."""
 
     def setUp(self):
@@ -210,7 +210,7 @@ class TestBaseFileOutput(unittest.TestCase):
                 os.remove(filename)
 
 
-class TestBaseFileInput(unittest.TestCase):
+class TestJsonBaseFileInput(unittest.TestCase):
     """Test the load_from_file method for reading instances from files."""
 
     def test_load_from_file_rectangle(self):
@@ -279,6 +279,115 @@ class TestBaseInstanceCreation(unittest.TestCase):
         empty_dict = {}
         r1 = Rectangle.create(**empty_dict)
         self.assertEqual(r1, None)
+
+
+class TestCsvBaseFileOutput(unittest.TestCase):
+    """Test the save_to_file_csv method for writing instances to files."""
+
+    def setUp(self):
+        """Reset the base class id counter"""
+        Base._Base__nb_objects = 0
+
+    def test_save_to_file_csv_rectangle(self):
+        r1 = Rectangle(10, 7, 2, 8)
+        r2 = Rectangle(2, 4)
+        Rectangle.save_to_file_csv([r1, r2])
+        with open("Rectangle.csv", "r") as file:
+            self.assertEqual(file.read(), "1,10,7,2,8\n2,2,4,0,0\n")
+
+    def test_save_to_file_csv_square(self):
+        s1 = Square(5, 3, 2)
+        s2 = Square(2, 4, 0)
+        Square.save_to_file_csv([s1, s2])
+        with open("Square.csv", "r") as file:
+            self.assertEqual(file.read(), "1,5,3,2\n2,2,4,0\n")
+
+    def test_save_to_file_csv_saves_object_data(self):
+        s = Square(5, 7, 1)
+        Base.save_to_file_csv([s])
+        with open("Base.csv", "r") as file:
+            self.assertEqual(file.read(), "1,5,7,1\n")
+
+    def test_save_to_file_csv_overwrite(self):
+        s1 = Square(1)
+        Square.save_to_file_csv([s1])
+        s2 = Square(2)
+        Square.save_to_file_csv([s2])
+        with open("Square.csv", "r") as file:
+            self.assertEqual(file.read(), "2,2,0,0\n")
+
+    def test_save_to_file_csv_empty_list(self):
+        Base.save_to_file_csv([])
+        with open("Base.csv", "r") as file:
+            self.assertEqual(file.read(), "[]")
+        Base.save_to_file_csv(None)
+        with open("Base.csv", "r") as file:
+            self.assertEqual(file.read(), "[]")
+
+    def test_save_to_file_csv_no_args(self):
+        with self.assertRaises(TypeError):
+            Base.save_to_file_csv()
+
+    def test_save_to_file_csv_more_than_one_arg(self):
+        with self.assertRaises(TypeError):
+            Base.save_to_file_csv([], 1)
+
+    def tearDown(self):
+        """Clean up resources after each test case."""
+        files_to_delete = ["Rectangle.csv", "Square.csv", "Base.csv"]
+        for filename in files_to_delete:
+            if os.path.exists(filename):
+                os.remove(filename)
+
+
+class TestCsvBaseFileInput(unittest.TestCase):
+    """Test the load_from_file_csv method for reading instances from files."""
+
+    def setUp(self):
+        """Reset the base class id counter"""
+        Base._Base__nb_objects = 0
+
+    def test_load_from_file_csv_rectangle(self):
+        r1 = Rectangle(4, 5, 1, 2)
+        r2 = Rectangle(3, 2, 2, 1)
+        Rectangle.save_to_file_csv([r1, r2])
+        loaded_rectangles = Rectangle.load_from_file_csv()
+        self.assertEqual(str(loaded_rectangles[0]), str(r1))
+        self.assertEqual(str(loaded_rectangles[1]), str(r2))
+
+    def test_load_from_file_csv_rectangle(self):
+        s1 = Square(1)
+        s2 = Square(2)
+        Square.save_to_file_csv([s1, s2])
+        loaded_squares = Square.load_from_file_csv()
+        self.assertEqual(str(loaded_squares[0]), str(s1))
+        self.assertEqual(str(loaded_squares[1]), str(s2))
+
+    def test_load_from_file_csv_empty_file(self):
+        """
+        with open("Rectangle.csv", "w") as file:
+            file.write("[]")
+        rectangles = Rectangle.load_from_file_csv()
+        self.assertEqual(len(rectangles), 0)
+        """
+        output = Square.load_from_file_csv()
+        self.assertEqual([], output)
+
+    def test_load_from_file_csv_nonexistent_file(self):
+        rectangles = Rectangle.load_from_file_csv()
+        self.assertEqual(len(rectangles), 0)
+        self.assertEqual(rectangles, [])
+
+    def test_load_from_file_csv_more_than_one_arg(self):
+        with self.assertRaises(TypeError):
+            Base.load_from_file_csv([], 1)
+
+    def tearDown(self):
+        """Clean up resources after each test case."""
+        files_to_delete = ["Rectangle.csv", "Square.csv", "Base.csv"]
+        for filename in files_to_delete:
+            if os.path.exists(filename):
+                os.remove(filename)
 
 
 if __name__ == "__main__":

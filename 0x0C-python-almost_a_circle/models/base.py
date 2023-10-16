@@ -112,7 +112,7 @@ class Base:
         file_name = f"{cls.__name__}.csv"
 
         with open(file_name, 'w', newline='') as csv_file:
-            if list_objs is None:
+            if list_objs is None or list_objs == []:
                 csv_file.write("[]")
             else:
                 if cls.__name__ == 'Rectangle':
