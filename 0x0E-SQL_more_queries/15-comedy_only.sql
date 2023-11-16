@@ -1,4 +1,4 @@
--- Uses the 'hbtn_0c_tvshows' database to lists all genres of the show 'Dexter'.
+-- Lists all Comedy shows in the database 'hbtn_0d_tvshows'.
 SELECT title
 FROM tv_shows
 LEFT JOIN tv_show_genres ON tv_shows.id = tv_show_genres.show_id
