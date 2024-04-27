@@ -10,7 +10,8 @@ if __name__ == "__main__":
     conn = MySQLdb.connect(host="localhost", user=arg[1],
                            passwd=arg[2], db=arg[3], port=3306)
     cursor = conn.cursor()
-    cursor.execute(f"SELECT * FROM states WHERE name = '{arg[4]}'")
+    cursor.execute("SELECT * FROM states WHERE name LIKE BINARY '{}'"
+                   .format(arg[4]))
     results = cursor.fetchall()
     for row in results:
         print(row)
