@@ -12,9 +12,9 @@ if __name__ == "__main__":
                            .format(sys.argv[1], sys.argv[2], sys.argv[3]))
     Session = sessionmaker(bind=engine)
     session = Session()
-    instance = session.query(State).filter(State.name == (sys.argv[4],))
-    try:
-        print(instance[0].id)
-    except IndexError:
+    state = session.query(State).filter(State.name == (sys.argv[4],)).first()
+    if state:
+        print(state.id)
+    else:
         print("Not found")
     session.close()
