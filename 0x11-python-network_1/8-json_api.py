@@ -12,7 +12,7 @@ if __name__ == "__main__":
         try:
             json_data = r.json()
             if json_data:
-                print(f"[{json_data.get('id')}] {json_data.get('name')")
+                print(f"[{json_data.get('id')}] {json_data.get('name')}")
             else:
                 print("No result")
         except requests.exceptions.JSONDecodeError as json_err:
