@@ -8,12 +8,12 @@ import requests
 if __name__ == "__main__":
     url = "http://0.0.0.0:5000/search_user"
     letter = "" if len(argv) == 1 else argv[1]
-    r = requests.get(url, data={'q': letter})
+    r = requests.post(url, data={'q': letter})
     try:
         json_data = r.json()
         if json_data:
             print(f"[{json_data.get('id')}] {json_data.get('name')}")
         else:
             print("No result")
-    except ValueError:
+    except requests.exceptions.JSONDecodeError:
         print("Not a valid JSON")
