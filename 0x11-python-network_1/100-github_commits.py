@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" """
+""" list 10 commits of the repository “rails” by the user “rails”
+using the GitHub API"""
 from sys import argv
 import requests
 
