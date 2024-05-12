@@ -14,5 +14,3 @@ if __name__ == "__main__":
         auth_name = commit.get("commit").get("author").get("name")
 
         print(f"{sha}: {auth_name}")
-
-
