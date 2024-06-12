@@ -125,5 +125,5 @@ Write a JavaScript script that fetches and prints how to say “Hello” dependi
 
 This project is part of the ALX Software Engineering program.
 
-    Name: [Naoufalhdr]
-    GitHub: [https://github.com/Naoufalhdr/]
+- Name: [Naoufalhdr]
+- GitHub: [https://github.com/Naoufalhdr/]
